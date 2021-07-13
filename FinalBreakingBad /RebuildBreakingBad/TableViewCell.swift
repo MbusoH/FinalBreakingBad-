@@ -10,21 +10,10 @@ import UIKit
 class TableViewCell: UITableViewCell {
     
     @IBOutlet weak var img: UIImageView!
-    
-    
     @IBOutlet weak var nameSurname: UILabel!
-    
-    
     @IBOutlet weak var nickName: UILabel!
-    
-    
-    
     @IBOutlet weak var dateOfBirth: UILabel!
-    
-    
-    
     @IBOutlet weak var buttonNextView: UIButton!
-    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,5 +25,4 @@ class TableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }
