@@ -15,6 +15,12 @@ let urlSession = URLSession.shared
 //url request from the url
 let request = URLRequest(url: url)
 
+
+//Creating onther seperate api url link calling all qoutes.
+let url1 = URL(string: "https://www.breakingbadapi.com/api/quotes")!
+let urlSession1 = URLSession.shared
+let request1 = URLRequest(url: url1)
+
 //THis struct creates the array with items inside and also determines the data type of the items in te array.
 struct Character: Decodable, CustomStringConvertible {
     let name: String
@@ -37,9 +43,23 @@ struct Character: Decodable, CustomStringConvertible {
     }
 }
 
+struct Quotes: Decodable {
+    let quote_id : Int
+    let quote: String
+    let author: String
+    let series: String
+    
+   enum QouteKeys: String, CodingKey {
+        case quote_id
+        case quote, author, eries
+    }
+}
+
 class TableViewController: UITableViewController {
     
     var dataToReturn = [Character]()
+    var quotesToReturn = [Quotes]()
+    var filteredQuotes = [Quotes]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +101,38 @@ class TableViewController: UITableViewController {
             return
         }
         
+        let task1 = urlSession1.dataTask(with: request1) { data1, response1, error2 in
+            if let error1 = error2 {
+                print("Error: \(error1.localizedDescription)")
+                return
+            }
+            //Unwarpping the data and confriming if there is data and not nil
+            guard let unwrappedData1 = data1 else {
+                print("No data")
+                return
+            }
+            //A JsconDecoder which occonverts the data from the jason  file with help from a struc "Character"!!!
+            let jsonDecoder1 = JSONDecoder()
+            do {
+                guard let quotes = try? jsonDecoder1.decode([Quotes].self, from: unwrappedData1)
+                else {
+                    print("Could not decode qoutes")
+                    return
+                }
+                print("pass1")
+                DispatchQueue.main.async {
+                    //give values to the dataToReturn dictionary
+                    self.quotesToReturn  = quotes
+                    //self.tableView.reloadData() //Reload very IMPORTANT!!!!!!
+                    print("*********************>>>\(self.quotesToReturn[1].author)")
+                }
+            }
+            return
+        }
+        
         //Activating the task and task1 (in  the ServersCalling.swift file) to start
         task.resume()
+        task1.resume()
         print("pass2")
     }
     
@@ -159,9 +209,18 @@ class TableViewController: UITableViewController {
         print("----------------> performing segue")
         if let ViewController = segue.destination as? ViewController {
             ViewController.dataRecieved = dataToReturn[(tableView.indexPathForSelectedRow?.row)!]
+            ViewController.quoteReceived = passQuotes(dataToReturn[(tableView.indexPathForSelectedRow?.row)!].name)
+            
+            func passQuotes(_ characterName: String) -> [Quotes] {
+                    filteredQuotes = quotesToReturn.filter {
+                        $0.author.elementsEqual(characterName)
+                    }
+                   return filteredQuotes
+                }
         }
         print("pass5")
     }
+    
     
     /*
     // Override to support conditional editing of the table view.

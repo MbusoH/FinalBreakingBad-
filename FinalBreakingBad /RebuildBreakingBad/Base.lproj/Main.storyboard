@@ -212,7 +212,7 @@
                         <outlet property="nickname" destination="VCf-tN-GN7" id="dyV-9n-uKA"/>
                         <outlet property="occupation" destination="IMh-Gy-BhG" id="6Fd-aG-1B0"/>
                         <outlet property="protrayed" destination="hHA-Sg-SpR" id="DW6-6j-dOY"/>
-                        <outlet property="qoute" destination="niE-EM-nIW" id="QWh-au-BQh"/>
+                        <outlet property="quote" destination="niE-EM-nIW" id="Z3G-Sr-Oqg"/>
                         <outlet property="status" destination="6QT-wY-wLk" id="iyp-6U-qvz"/>
                     </connections>
                 </viewController>
