@@ -51,7 +51,7 @@ struct Quotes: Decodable {
     
    enum QouteKeys: String, CodingKey {
         case quote_id
-        case quote, author, eries
+        case quote, author, series
     }
 }
 
