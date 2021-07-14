@@ -124,7 +124,7 @@ class TableViewController: UITableViewController {
                     //give values to the dataToReturn dictionary
                     self.quotesToReturn  = quotes
                     //self.tableView.reloadData() //Reload very IMPORTANT!!!!!!
-                    print("*********************>>>\(self.quotesToReturn[1].author)")
+                    //print("*********************>>>\(self.quotesToReturn[1].author)")
                 }
             }
             return
